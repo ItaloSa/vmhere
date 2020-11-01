@@ -41,6 +41,9 @@ const Wrapper = styled.div`
       background-color: ${theme.darkB};
     }
   }
+  select {
+    cursor: pointer;
+  }
 `;
 
 export const Input = ({ label, help, invalid = false, ...rest }) => {
@@ -82,6 +85,7 @@ const CheckWrapper = styled.div`
     background-color: ${theme.dark};
     border: 2px solid ${theme.darker};
     border-radius: .25rem;
+    cursor: pointer;
     :hover {
       border-color: ${theme.highlight};
       background-color: ${theme.darkB};

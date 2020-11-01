@@ -12,6 +12,7 @@ const GlobalStyle = createGlobalStyle`
   body {
     background-color: ${theme.dark};
     color: ${theme.white};
+    font-size: 1rem;
   }
 `;
 

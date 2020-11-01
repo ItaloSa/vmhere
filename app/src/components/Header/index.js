@@ -6,9 +6,6 @@ export const HeaderWrapper = styled.header`
   .col {
     display: flex;
     align-items: center;
-  }
-  .row{
-    display: flex;
     justify-content: space-between;
   }
 `;

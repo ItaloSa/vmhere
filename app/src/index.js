@@ -14,6 +14,11 @@ const GlobalStyle = createGlobalStyle`
     color: ${theme.white};
     font-size: 1rem;
   }
+  #root {
+    position: relative;
+    min-height: 100vh;
+    padding-bottom: calc(1.5 + 40px);
+  }
 `;
 
 ReactDOM.render(

@@ -12,10 +12,6 @@ const THead = styled.thead`
 `;
 
 const TBody = styled.tbody`
-box-sizing: content-box;
-  tr {
-    border-bottom: 1px solid ${theme.light};
-  }
   td {
     padding: .75rem;
   }
@@ -34,12 +30,12 @@ export const TableHead = ({ children }) => (
 );
 
 export const TableBody = ({ children }) => (
-  <TBody>
-    <tr>
-      {children}
-    </tr>
-  </TBody>
+  <TBody>{children}</TBody>
 );
+
+export const TableRow = styled.tr`
+  border-bottom: 1px solid ${theme.light};
+`;
 
 export const TableItem = ({ children, head = false }) => {
   if (head) {

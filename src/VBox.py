@@ -29,13 +29,22 @@ class VBox:
         for result_text in result:
             if len(result_text) > 0:
                 txt = re.sub('[ ]{2,}', "", result_text)
+                if "Memory size" in txt:
+                    mem = int(re.match('\d+',txt[11:]).group()) / 1024
+                    txt = f'{txt[:11]}:{mem}'
                 txt = txt.split(":")
                 if len(txt) > 1:
+                    value = txt[1]
                     if txt[0] == 'Name':
                         response.append(vm)
                         vm = {}
                         cnt = cnt + 1
-                    response[cnt][txt[0]] = txt[1]
+                    elif txt[0] == 'State':
+                        if 'running' in value:
+                            value = 'ON'
+                        else:
+                            value = 'OFF'
+                    response[cnt][txt[0]] = value
         return response
 
     def create(self, base_image, name, memory, cpu_n):
@@ -66,4 +75,8 @@ class VBox:
 
     def save(self, name):
         cmd = ["VBoxManage", "controlvm", name, "savestate"]
+        self.run_cmd(cmd)
+
+    def remove(self, name):
+        cmd = ["VBoxManage", "unregistervm", name, "--delete"]
         self.run_cmd(cmd)

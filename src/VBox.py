@@ -80,3 +80,24 @@ class VBox:
     def remove(self, name):
         cmd = ["VBoxManage", "unregistervm", name, "--delete"]
         self.run_cmd(cmd)
+    
+    def edit(self, name, memory, cpu_n):
+        vms = self.list_vms(running=True)
+        vm_is_running = False
+        for vm in vms:
+            if name == vm["Name"]:
+                if "running" in vm["State"]:
+                    vm_is_running = True
+        if vm_is_running:
+            self.save(name)
+        cmd = ["VBoxManage", "modifyvm", name]
+        if memory:
+            cmd.append('--memory')
+            cmd.append(memory)
+        if cpu_n:
+            cmd.append('--cpus')
+            cmd.append(cpu_n)
+        self.run_cmd(cmd)
+        if vm_is_running:
+            self.start(name)
+        

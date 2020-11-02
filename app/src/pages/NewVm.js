@@ -1,18 +1,14 @@
 import React from 'react';
 
 import { Section, SectionContent, SectionTitle } from '../components/Section';
-import VmForm from '../containers/VmForm';
+import NewVMForm from '../containers/NewVMForm';
 
 const NewVm = () => {
   return (
     <Section>
       <SectionTitle>New VM</SectionTitle>
       <SectionContent>
-        <div className="row">
-          <div className="col-6">
-            <VmForm />
-          </div>
-        </div>
+        <NewVMForm />
       </SectionContent>
     </Section>
   );

@@ -71,7 +71,7 @@ const VmList = () => {
                   ) :
                     <ActionBtn icon={FaPlay} onClick={() => doAction(item.name, 'start')} />
                   }
-                  <ActionBtn icon={FaTrash} onClick={() => doAction(item.name, 'kill')} />
+                  <ActionBtn icon={FaTrash} onClick={() => doAction(item.name, 'remove')} />
                 </TableItem>
               </TableRow>
             ))}

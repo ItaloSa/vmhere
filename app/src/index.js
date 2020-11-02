@@ -21,7 +21,7 @@ const GlobalStyle = createGlobalStyle`
   #root {
     position: relative;
     min-height: 100vh;
-    padding-bottom: calc(1.5 + 40px);
+    padding-bottom: calc(1.5rem + 40px);
   }
 `;
 

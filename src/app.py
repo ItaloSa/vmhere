@@ -1,5 +1,6 @@
 
 from flask import Flask, jsonify, request, send_file
+from flask_cors import CORS
 import os
 import controller
 
@@ -7,6 +8,7 @@ APP_PORT = os.getenv('PORT') or 5000
 
 server = Flask(__name__)
 server.config['DEBUG'] = True
+CORS(server)
 
 
 @server.route('/', methods=['GET'])
@@ -26,11 +28,12 @@ def get_vms():
 @server.route('/vms', methods=['POST'])
 def add_vm():
     data = request.json
+    print(data)
     vm = controller.create_vm(
         os=data["os"],
-        memory=data["memory"],
+        memory=int(data["memory"]),
         name=data["name"],
-        cpu_n=data["cpu_n"]
+        cpu_n=int(data["cpu_n"])
     )
     if vm == -1:
         return jsonify({'code': 'DUPLICATED'}), 400
@@ -58,7 +61,7 @@ def save_vm(name):
         return jsonify({'code': 'NOT_OK'}),  500
 
 
-@server.route('/vms/<name>/kill', methods=['POST'])
+@server.route('/vms/<name>/stop', methods=['POST'])
 def kill_vm(name):
     vm = controller.kill_vm(name)
     if vm:

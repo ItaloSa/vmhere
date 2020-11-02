@@ -78,16 +78,22 @@ class VBox:
         self.run_cmd(cmd)
 
     def remove(self, name):
+        if self.is_running(name):
+            self.kill(name)
         cmd = ["VBoxManage", "unregistervm", name, "--delete"]
         self.run_cmd(cmd)
     
-    def edit(self, name, memory, cpu_n):
+    def is_running(self, name):
         vms = self.list_vms(running=True)
         vm_is_running = False
         for vm in vms:
             if name == vm["Name"]:
                 if "running" in vm["State"]:
                     vm_is_running = True
+        return vm_is_running
+
+    def edit(self, name, memory, cpu_n):
+        vm_is_running  = self.is_running(name)
         if vm_is_running:
             self.save(name)
         cmd = ["VBoxManage", "modifyvm", name]

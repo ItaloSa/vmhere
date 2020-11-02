@@ -46,29 +46,38 @@ const Wrapper = styled.div`
   }
 `;
 
-export const Input = ({ label, help, invalid = false, ...rest }) => {
+export const Input = React.forwardRef((props, ref) => {
+  const { label, help, invalid = false, ...rest } = props;
+
   return (
     <Wrapper className={invalid ? 'invalid' : undefined}>
       <label>{label}</label>
-      <input {...rest} />
+      <input {...rest} ref={ref} />
       <small>{help}</small>
     </Wrapper>
   );
-};
+});
 
-export const Select = ({ label, help, invalid = false, ...rest }) => {
+export const Select = React.forwardRef((props, ref) => {
+  const { label, help, name, options = [], ...rest } = props;
+
   return (
     <Wrapper>
       <label>{label}</label>
-      <select {...rest}>
-        <option>1</option>
-        <option>2</option>
-        <option>3</option>
+      <select {...rest} ref={ref} name={name}>
+        {options.map((item, idx) => (
+          <option
+            value={item.value}
+            key={`select-${name}-${idx}`}
+          >
+            {item.label}
+          </option>
+        ))}
       </select>
       <small>{help}</small>
     </Wrapper>
   );
-};
+});
 
 const CheckWrapper = styled.div`
   input {
@@ -87,7 +96,7 @@ const CheckWrapper = styled.div`
     border-radius: .25rem;
     cursor: pointer;
     :hover {
-      border-color: ${theme.highlight};
+      border-color: ${theme.highlight} !important;
       background-color: ${theme.darkB};
     }
   }
@@ -99,12 +108,26 @@ const CheckWrapper = styled.div`
   }
 `;
 
-export const Check = ({ label, help, selected = false, ...rest }) => {
+export const Check = React.forwardRef((props, ref) => {
+  const { label, value, setField, defaultChecked, ...rest } = props
+
+  const isSelected = () => {
+    return defaultChecked === value
+  };
+
   return (
-    <CheckWrapper className={selected ? 'selected' : undefined}>
+    <CheckWrapper
+      className={isSelected() ? 'selected' : undefined}
+      onClick={() => setField(value)}
+    >
       <label>{label}</label>
-      <input type="radio" {...rest} style={{}} />
-      {/* <small>{help}</small> */}
+      <input
+        type="radio"
+        defaultChecked={isSelected()}
+        value={value}
+        {...rest}
+        ref={ref}
+      />
     </CheckWrapper>
   );
-};
+});
